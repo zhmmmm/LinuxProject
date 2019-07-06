@@ -65,7 +65,7 @@ class DOS
 	int m_sendPackageNum = 0;
 public:
 	static DOS *getInstance();
-	void initDos(const char *IP = NULL,const int Port = 80);
+	void initDos(const char *IP = NULL, const int Port = 80);
 	void initDos(const char *IP = NULL, const char *Port = "80");
 	void init_header(struct ip *ip, struct tcphdr *tcp, struct pseudohdr *pseudoheader);
 	void judge_argc(int argc);

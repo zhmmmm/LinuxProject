@@ -5,7 +5,7 @@ DOS::DOS()
 {
 	this->m_threadNum = 100;
 	this->m_thread = new pthread_t[this->m_threadNum];
-	bzero(this->m_thread,this->m_threadNum * sizeof(pthread_t));
+	bzero(this->m_thread, this->m_threadNum * sizeof(pthread_t));
 }
 DOS::~DOS()
 {
@@ -252,7 +252,7 @@ void *DOS::sendFlood(void *addr)
 			pthread_exit(NULL);
 		}
 		printf("%s", "\033[1H\033[2J");
-		printf("Send Package Number = %d \n",FLOOD->m_sendPackageNum);
+		printf("Send Package Number = %d \n", FLOOD->m_sendPackageNum);
 	}
 }
 
