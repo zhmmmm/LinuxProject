@@ -17,6 +17,7 @@
 #include <pthread.h>
 // -lpthread
 
+// ./a.out www.baidu.com 80
 struct ip{
 	unsigned char       hl;
 	unsigned char       tos;
