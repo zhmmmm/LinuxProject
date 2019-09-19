@@ -18,7 +18,8 @@
 // -lpthread
 
 // ./a.out www.baidu.com 80
-struct ip{
+struct ip
+{
 	unsigned char       hl;
 	unsigned char       tos;
 	unsigned short      total_len;
@@ -29,8 +30,10 @@ struct ip{
 	unsigned short      checksum;
 	unsigned int        sourceIP;
 	unsigned int        destIP;
-};
-struct tcphdr{
+};
+
+struct tcphdr
+{
 	unsigned short      sport;
 	unsigned short      dport;
 	unsigned int        seq;
@@ -40,7 +43,8 @@ struct tcphdr{
 	unsigned short      win;
 	unsigned short      sum;
 	unsigned short      urp;
-};
+};
+
 struct pseudohdr
 {
 	unsigned int	    saddr;

